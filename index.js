@@ -1,6 +1,6 @@
 import express from 'express'
 import { dbconn } from './dataBase/dbConnection.js'
-import { resolve,join} from 'path'
+import path, { resolve,join} from 'path'
 import homeRouter from './src/modules/home/home.routes.js'
 import loginRouter from './src/modules/login/login.routes.js'
 import registerRouter from './src/modules/register/register.routes.js'
@@ -29,9 +29,11 @@ app.use(session({
 }))
 
 app.use(cors())
-app.set('views','views')
+app.set('views', path.resolve()+'/views')
+// app.set('views','views')
 app.set('view engine','ejs')
-app.use(express.static('public'))
+app.use(express.static(path.join(path.resolve(),"public")))
+// app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
 app.use(homeRouter)
 app.use(loginRouter)
